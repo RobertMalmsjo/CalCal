@@ -1,17 +1,28 @@
 import { StyleSheet } from 'react-native';
-
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import { DayPicker } from 'react-day-picker';
+import React from 'react';
+import { format } from 'date-fns';
 
-export default function TabTwoScreen() {
+
+export default function Caly() {
+  const [selected, setSelected] = React.useState<Date>();
+
+  let footer = <Text>Please pick a day.</Text>;
+  if (selected) {
+    footer = <Text>You picked {format(selected, 'PP')}.</Text>;
+  }
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
-    </View>
+        <DayPicker
+        mode="single"
+        selected={selected}
+        onSelect={setSelected}
+        footer={footer}
+    />
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -24,8 +35,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   separator: {
-    marginVertical: 30,
+    marginVertical: 10,
     height: 1,
-    width: '80%',
+    width: '100%',
   },
 });
